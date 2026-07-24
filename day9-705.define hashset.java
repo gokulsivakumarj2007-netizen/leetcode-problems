@@ -1,0 +1,35 @@
+import java.util.LinkedList;
+
+class MyHashSet {
+    private final int BUCKET_SIZE = 769; // A prime number reduces hash collisions
+    private LinkedList<Integer>[] buckets;
+
+    public MyHashSet() {
+        buckets = new LinkedList[BUCKET_SIZE];
+        for (int i = 0; i < BUCKET_SIZE; i++) {
+            buckets[i] = new LinkedList<>();
+        }
+    }
+    
+    private int hash(int key) {
+        return key % BUCKET_SIZE;
+    }
+    
+    public void add(int key) {
+        int index = hash(key);
+        if (!buckets[index].contains(key)) {
+            buckets[index].add(key);
+        }
+    }
+    
+    public void remove(int key) {
+        int index = hash(key);
+        // Using Integer.valueOf(key) ensures removal by object value, not by index
+        buckets[index].remove(Integer.valueOf(key));
+    }
+    
+    public boolean contains(int key) {
+        int index = hash(key);
+        return buckets[index].contains(key);
+    }
+}
